@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE configuration
+    PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<!--在spring配置文件中已经重新配置了mybatis,所以此文件已经废弃-->
+
+<!-- mybatis配置 -->
+
+<configuration>
+    <!-- 配置环境 -->
+    <environments default="mysql">
+        <environment id="mysql">
+            <transactionManager type="JDBC"></transactionManager>
+            <dataSource type="POOLED">
+                <property name="driver" value="com.mysql.jdbc.Driver" />
+                <property name="url" value="jdbc:mysql://localhost:3306/ssm?serverTimezone=UTC" />
+                <property name="username" value="root" />
+                <property name="password" value="yxm174276" />
+            </dataSource>
+        </environment>
+    </environments>
+    <!-- 引入映射配置文件 -->
+    <mappers>
+        <!--<mapper class="com.yxm.dao.AccountDao" />-->
+        <package name="com.yxm.dao" />
+    </mappers>
+</configuration>

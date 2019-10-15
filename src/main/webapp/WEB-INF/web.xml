@@ -1,0 +1,56 @@
+<!DOCTYPE web-app PUBLIC
+ "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
+ "http://java.sun.com/dtd/web-app_2_3.dtd" >
+
+<web-app>
+  <display-name>Archetype Created Web Application</display-name>
+
+  <!-- 由于spring配置文件applicationContext.xml和springmvc.xml都放在了resources目录下,编译后此目录文件会被编译到classes目录 -->
+  <!-- =========================================加载springmvc.xml===================================================== -->
+  <!-- 1.配置spring的监听器,用于加载spring的配置文件:applicationContext.xml -->
+  <listener>
+    <!-- 监听器:ContextLoaderListener,监听contextLoad事件 -->
+    <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+  </listener>
+  <!-- 设置配置文件的路径 -->
+  <context-param>
+    <!-- 项目编译后applicationContext.xml的实际路径 -->
+    <param-name>contextConfigLocation</param-name>
+    <!-- 到类加载路径classes目录下找"applicationContext.xml"文件 -->
+    <param-value>classpath:applicationContext.xml</param-value>
+  </context-param>
+
+  <!-- =========================================加载springmvc.xml================================================= -->
+  <!-- 2.配置前端控制器,由dispatcherServlet负责请求分发 -->
+  <servlet>
+    <servlet-name>dispatcherServlet</servlet-name>
+    <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+    <!-- 初始化参数 : 加载sprihngmvc配置文件 -->
+    <init-param>
+      <param-name>contextConfigLocation</param-name>
+      <param-value>classpath:springmvc.xml</param-value>
+    </init-param>
+    <!-- tomcat启动时就加载,dispatcherServlet -->
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>dispatcherServlet</servlet-name>
+    <url-pattern>/</url-pattern>
+  </servlet-mapping>
+
+  <!-- ======================================================================================================= -->
+  <!-- 3.解决中文乱码专用过滤器 -->
+  <filter>
+    <filter-name>characterEncodingFilter</filter-name>
+    <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+    <init-param>
+      <param-name>encoding</param-name>
+      <param-value>UTF-8</param-value>
+    </init-param>
+  </filter>
+  <filter-mapping>
+    <filter-name>characterEncodingFilter</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
+
+</web-app>
